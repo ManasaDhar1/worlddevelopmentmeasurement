@@ -4,11 +4,11 @@ import numpy as np
 
 app = Flask(__name__)
 
-# Load the trained Hierarchical Clustering model
+# Load the pre-trained model
 model = joblib.load("model.pkl")
 
-# Dummy dataset (use the same dataset used for training)
-X = np.array([[1], [2], [5], [6], [8], [10]])  # Example dataset
+# Use the same dataset from training
+X_train = np.array([[1], [2], [3], [5], [6], [8], [9], [10], [15], [20], [25]])
 
 @app.route("/")
 def home():
@@ -17,17 +17,12 @@ def home():
 @app.route("/result", methods=["POST"])
 def result():
     try:
-        # Get user input
         user_input = float(request.form.get("user_input"))
 
-        # Add user input to dataset
-        X_new = np.vstack([X, [user_input]])
-
-        # Recompute clusters
-        clusters = model.fit_predict(X_new)
-
-        # Get the cluster for the last (user-input) value
-        cluster = clusters[-1]
+        # Find the closest cluster to user input
+        distances = np.abs(X_train - user_input)
+        closest_point_index = np.argmin(distances)
+        cluster = model.fit_predict(X_train)[closest_point_index]  # Assign cluster based on closest point
 
         return render_template("result.html", user_input=user_input, cluster=cluster)
 
