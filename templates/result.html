@@ -1,30 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cluster Prediction</title>
+    <title>Clustering Result</title>
 </head>
 <body>
-    <h1>Cluster Prediction Result</h1>
+    <h1>Clustering Result</h1>
+    
     {% if error %}
         <p style="color:red;">Error: {{ error }}</p>
     {% else %}
-        <p>You entered:</p>
-        <ul>
-            <li>Birth Rate: {{ birth_rate }}</li>
-            <li>Business Tax Rate: {{ business_tax_rate }}</li>
-            <li>CO2 Emissions: {{ co2_emissions }}</li>
-            <li>Days to Start Business: {{ days_start_business }}</li>
-            <li>Ease of Business: {{ ease_business }}</li>
-            <li>Energy Usage: {{ energy_usage }}</li>
-            <li>GDP: {{ gdp }}</li>
-            <li>Health Exp % GDP: {{ health_exp_gdp }}</li>
-            <li>Health Exp/Capita: {{ health_exp_capita }}</li>
-            <li>Life Expectancy Female: {{ life_expectancy_female }}</li>
-        </ul>
-        <p>Predicted Cluster: {{ cluster }}</p>
+        <p><strong>Predicted Cluster:</strong> {{ cluster }}</p>
+        <h2>Input Values:</h2>
+        <table border="1">
+            <tr>
+                <th>Feature</th>
+                <th>Value</th>
+            </tr>
+            {% for col, val in zip(columns, user_input) %}
+            <tr>
+                <td>{{ col }}</td>
+                <td>{{ val }}</td>
+            </tr>
+            {% endfor %}
+        </table>
     {% endif %}
-    <a href="/">Try Again</a>
+
+    <br>
+    <a href="/">Go Back</a>
 </body>
 </html>
