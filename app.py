@@ -1,33 +1,35 @@
-from flask import Flask, render_template, request
-import joblib
-import numpy as np
+from flask import Flask, request, render_template
 
 app = Flask(__name__)
 
-# Load the pre-trained model
-model = joblib.load("model.pkl")
-
-# Use the same dataset from training
-X_train = np.array([[1], [2], [3], [5], [6], [8], [9], [10], [15], [20], [25]])
-
-@app.route("/")
+@app.route('/')
 def home():
-    return render_template("home.html")
+    return render_template('home.html')
 
-@app.route("/result", methods=["POST"])
+@app.route('/result', methods=['POST'])
 def result():
     try:
-        user_input = float(request.form.get("user_input"))
+        birth_rate = float(request.form.get('birth_rate', 0))  # Default to 0 if missing
+        business_tax_rate = float(request.form.get('business_tax_rate', 0))
+        co2_emissions = float(request.form.get('co2_emissions', 0))
+        days_start_business = float(request.form.get('days_start_business', 0))
+        ease_business = float(request.form.get('ease_business', 0))
+        energy_usage = float(request.form.get('energy_usage', 0))
+        gdp = float(request.form.get('gdp', 0))
+        health_exp_gdp = float(request.form.get('health_exp_gdp', 0))
+        health_exp_capita = float(request.form.get('health_exp_capita', 0))
+        life_expectancy_female = float(request.form.get('life_expectancy_female', 0))
 
-        # Find the closest cluster to user input
-        distances = np.abs(X_train - user_input)
-        closest_point_index = np.argmin(distances)
-        cluster = model.fit_predict(X_train)[closest_point_index]  # Assign cluster based on closest point
+        # Your clustering logic here
+        cluster = "Cluster 1"  # Replace with actual model prediction
 
-        return render_template("result.html", user_input=user_input, cluster=cluster)
+        return render_template('result.html', birth_rate=birth_rate, business_tax_rate=business_tax_rate, 
+                               co2_emissions=co2_emissions, days_start_business=days_start_business,
+                               ease_business=ease_business, energy_usage=energy_usage, gdp=gdp, 
+                               health_exp_gdp=health_exp_gdp, health_exp_capita=health_exp_capita, 
+                               life_expectancy_female=life_expectancy_female, cluster=cluster)
+    except ValueError as e:
+        return render_template('result.html', error=f"Invalid input: {e}")
 
-    except Exception as e:
-        return render_template("result.html", error=str(e))
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000)
+if __name__ == '__main__':
+    app.run(debug=True)
