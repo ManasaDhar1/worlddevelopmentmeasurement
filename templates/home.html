@@ -8,8 +8,36 @@
 <body>
     <h1>Hierarchical Clustering Prediction</h1>
     <form action="/result" method="post">
-        <label for="user_input">Enter a numerical value:</label>
-        <input type="text" id="user_input" name="user_input" required>
+        <label for="birth_rate">Birth Rate:</label>
+        <input type="text" id="birth_rate" name="birth_rate" required>
+
+        <label for="business_tax_rate">Business Tax Rate:</label>
+        <input type="text" id="business_tax_rate" name="business_tax_rate" required>
+
+        <label for="co2_emissions">CO2 Emissions:</label>
+        <input type="text" id="co2_emissions" name="co2_emissions" required>
+
+        <label for="days_start_business">Days to Start Business:</label>
+        <input type="text" id="days_start_business" name="days_start_business" required>
+
+        <label for="ease_business">Ease of Business:</label>
+        <input type="text" id="ease_business" name="ease_business" required>
+
+        <label for="energy_usage">Energy Usage:</label>
+        <input type="text" id="energy_usage" name="energy_usage" required>
+
+        <label for="gdp">GDP:</label>
+        <input type="text" id="gdp" name="gdp" required>
+
+        <label for="health_exp_gdp">Health Exp % GDP:</label>
+        <input type="text" id="health_exp_gdp" name="health_exp_gdp" required>
+
+        <label for="health_exp_capita">Health Exp/Capita:</label>
+        <input type="text" id="health_exp_capita" name="health_exp_capita" required>
+
+        <label for="life_expectancy_female">Life Expectancy Female:</label>
+        <input type="text" id="life_expectancy_female" name="life_expectancy_female" required>
+
         <button type="submit">Predict Cluster</button>
     </form>
 </body>
